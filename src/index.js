@@ -31,7 +31,7 @@ async function connect_db() {
             host: process.env.HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
-            database: "spongeBob",
+            database: process.env.DB_NAME,
         });
         conex.connect();
         return conex;
