@@ -1,0 +1,211 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Sponge Bob API",
+        "version": "1.0.0",
+        "description": "API de Bob Esponja"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Servidor de desarrollo"
+        }
+    ],
+    "paths": {
+        "/personajes": {
+            "get": {
+                "summary": "Lista de todos los personajes",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "info": {
+                                            "type": "object",
+                                            "properties": {
+                                                "count": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/personajes"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Añade un personaje nuevo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/nuevoPersonaje"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Personaje añadido exitosamente"
+                    }
+                }
+            }
+        },
+        "/personajes/filter": {
+            "get": {
+                "summary": "Filtro de los personajes",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "personaje": {
+                                            "$ref": "#/components/schemas/personajes"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado nada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/personajes/{id}": {
+            "put": {
+                "summary": "Actualizar un personaje existente",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/nuevoPersonaje"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Personaje actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "el id no existe"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar un personaje existente",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Personaje eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "el id no existe"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "nuevoPersonaje": {
+                "type": "object",
+                "properties": {
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "apellidos": {
+                        "type": "string"
+                    },
+                    "trabajo": {
+                        "type": "string"
+                    },
+                    "hobbie": {
+                        "type": "string"
+                    },
+                    "imagenes": {
+                        "type": "string"
+                    }
+                }
+            },
+            "personajes": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "apellidos": {
+                        "type": "string"
+                    },
+                    "trabajo": {
+                        "type": "string"
+                    },
+                    "hobbie": {
+                        "type": "string"
+                    },
+                    "imagenes": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
