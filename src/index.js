@@ -25,16 +25,20 @@ const port = process.env.PORT;
 //conectamos a la base de datos
 
 async function connect_db() {
+    try {
+        const conex = await mysql.createConnection({
 
-    const conex = await mysql.createConnection({
+            host: process.env.HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: "spongeBob",
+        });
+        conex.connect();
+        return conex;
+    } catch (error) {
+        console.error(error)
+    }
 
-        host: process.env.HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: "spongeBob",
-    });
-    conex.connect();
-    return conex;
 }
 
 connect_db();
